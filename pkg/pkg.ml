@@ -10,6 +10,7 @@ let cpuflags = [`SSSE3; `AES; `PCLMULQDQ]
 
 let unix = Conf.with_pkg ~default:true "unix"
 let lwt  = Conf.with_pkg ~default:false "lwt"
+let async = Conf.with_pkg ~default:false "async"
 let xen  = Conf.(key "xen" bool ~absent:false
                  ~doc:"Build Mirage/Xen support.")
 let fs   = Conf.(key "freestanding" bool ~absent:false
@@ -38,15 +39,17 @@ let build = Pkg.build ~cmd ()
 
 let () =
   Pkg.describe "nocrypto" ~build ~opams @@ fun c ->
-    let unix = Conf.value c unix in
-    let lwt  = Conf.value c lwt && unix
-    and xen  = Conf.value c xen
-    and fs   = Conf.value c fs in
-    let mir  = Conf.value c mir in
+    let unix  = Conf.value c unix in
+    let lwt   = Conf.value c lwt && unix
+    and async = Conf.value c async
+    and xen   = Conf.value c xen
+    and fs    = Conf.value c fs in
+    let mir   = Conf.value c mir in
     Ok [ Pkg.clib "src/libnocrypto_stubs.clib";
          Pkg.mllib "src/nocrypto.mllib";
          Pkg.mllib ~cond:unix "unix/nocrypto_unix.mllib";
          Pkg.mllib ~cond:lwt "lwt/nocrypto_lwt.mllib";
+         Pkg.mllib ~cond:async "async/nocrypto_async.mllib";
          Pkg.mllib ~cond:mir "mirage/nocrypto_mirage.mllib";
          Pkg.test "tests/testrunner";
          Pkg.test ~run:false "bench/speed";

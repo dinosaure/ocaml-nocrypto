@@ -31,6 +31,17 @@ package "lwt" (
  exists_if = "nocrypto_lwt.cma"
 )
 
+package "async" (
+ version = "%%VERSION_NUM%%"
+ description = "Simple crypto for the modern age"
+ requires = "nocrypto nocrypto.unix async"
+ archive(byte) = "nocrypto_async.cma"
+ archive(native) = "nocrypto_async.cmxa"
+ plugin(byte) = "nocrypto_async.cma"
+ plugin(native) = "nocrypto_async.cmxs"
+ exists_if = "nocrypto_async.cma"
+)
+
 package "mirage" (
  version = "%%VERSION_NUM%%"
  description = "Simple crypto for the modern age"

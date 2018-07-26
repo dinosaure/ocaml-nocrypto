@@ -12,6 +12,7 @@ available:     [ ocaml-version >= "4.02.0" ]
 build: ["ocaml" "pkg/pkg.ml" "build" "--pinned" "%{pinned}%" "--tests" "false"
                 "--with-lwt" "%{lwt+cstruct-lwt:installed}%"
                 "--xen" "%{mirage-xen:installed}%"
+                "--with-async" "%{async:installed}%"
                 "--mirage" "%{mirage-entropy+lwt:installed}%"
                 "--freestanding" "%{mirage-solo5:installed}%"]
 
