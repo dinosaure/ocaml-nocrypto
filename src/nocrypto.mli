@@ -312,8 +312,8 @@ module Hash : sig
   (** Either an ['a] or its digest, according to some hash algorithm. *)
 
   (**/**)
-  val hash_of_sexp : Sexplib.Sexp.t -> hash
-  val sexp_of_hash : hash -> Sexplib.Sexp.t
+  val hash_of_sexp : Ppx_sexp_conv_lib.Sexp.t -> hash
+  val sexp_of_hash : hash -> Ppx_sexp_conv_lib.Sexp.t
   (**/**)
 
 end
@@ -1140,11 +1140,11 @@ module Rsa : sig
   end
 
   (**/**)
-  val pub_of_sexp : Sexplib.Sexp.t -> pub
-  val sexp_of_pub : pub -> Sexplib.Sexp.t
+  val pub_of_sexp : Ppx_sexp_conv_lib.Sexp.t -> pub
+  val sexp_of_pub : pub -> Ppx_sexp_conv_lib.Sexp.t
 
-  val priv_of_sexp : Sexplib.Sexp.t -> priv
-  val sexp_of_priv : priv -> Sexplib.Sexp.t
+  val priv_of_sexp : Ppx_sexp_conv_lib.Sexp.t -> priv
+  val sexp_of_priv : priv -> Ppx_sexp_conv_lib.Sexp.t
   (**/**)
 
 end
@@ -1236,11 +1236,11 @@ module Dsa : sig
   end
 
   (**/**)
-  val pub_of_sexp : Sexplib.Sexp.t -> pub
-  val sexp_of_pub : pub -> Sexplib.Sexp.t
+  val pub_of_sexp : Ppx_sexp_conv_lib.Sexp.t -> pub
+  val sexp_of_pub : pub -> Ppx_sexp_conv_lib.Sexp.t
 
-  val priv_of_sexp : Sexplib.Sexp.t -> priv
-  val sexp_of_priv : priv -> Sexplib.Sexp.t
+  val priv_of_sexp : Ppx_sexp_conv_lib.Sexp.t -> priv
+  val sexp_of_priv : priv -> Ppx_sexp_conv_lib.Sexp.t
   (**/**)
 
 end
@@ -1335,11 +1335,11 @@ module Dh : sig
   end
 
   (**/**)
-  val group_of_sexp : Sexplib.Sexp.t -> group
-  val sexp_of_group : group -> Sexplib.Sexp.t
+  val group_of_sexp : Ppx_sexp_conv_lib.Sexp.t -> group
+  val sexp_of_group : group -> Ppx_sexp_conv_lib.Sexp.t
 
-  val secret_of_sexp : Sexplib.Sexp.t -> secret
-  val sexp_of_secret : secret -> Sexplib.Sexp.t
+  val secret_of_sexp : Ppx_sexp_conv_lib.Sexp.t -> secret
+  val sexp_of_secret : secret -> Ppx_sexp_conv_lib.Sexp.t
   (**/**)
 
 end
