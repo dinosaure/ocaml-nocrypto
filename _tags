@@ -23,3 +23,5 @@ true: package(bytes), package(cstruct)
 <tests/*>: use_nocrypto, package(zarith), package(oUnit)
 
 <rondom>: -traverse
+
+true: package(bigarray-compat)
