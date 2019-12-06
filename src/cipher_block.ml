@@ -341,7 +341,7 @@ module Modes2 = struct
 
 end
 
-open Bigarray
+open Bigarray_compat
 
 module AES = struct
 
