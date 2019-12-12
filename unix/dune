@@ -13,7 +13,7 @@
   (optional)
   (modules no_native)
   (implements no_native)
-  (libraries zarith)
+  (libraries bigarray-compat zarith)
   (foreign_stubs
     (language c)
     (names misc

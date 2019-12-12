@@ -5,7 +5,7 @@
   (implements no_native)
   (variant freestanding)
   (optional)
-  (libraries ocaml-freestanding zarith.freestanding)
+  (libraries bigarray-compat ocaml-freestanding zarith.freestanding)
   (foreign_stubs
     (language c)
     (names misc
