@@ -54,10 +54,10 @@ module Pollard = struct
       scan Z.one Z.(of_int 2)
 
   let split ~limit n =
-    let a = Nums.Z.gen n in
+    let a = Nocrypto.Rng.Z.gen n in
     match Z.gcd n a with
     | d when d > Z.one -> a
-    | d ->
+    | _ ->
         let rec scan a m =
           let x = Z.(powm a (m * n) n) in
           if Z.(x = one) then
@@ -79,7 +79,7 @@ module RSA_misc = struct
   (* Rivest's p-minus strong prime generator. *)
 
   let rec pm_strong_prime ?g ~bits =
-    let a_lim = Z.(pow z_two slack - one)
+    let a_lim = Z.(pow (of_int 2) slack - one)
     in
     let rec mul_seq p = function
       | a when a > a_lim ->
@@ -90,28 +90,28 @@ module RSA_misc = struct
           match Z.probab_prime p' 25 with
           | 0 ->
               Printf.printf "+ mul seq: climb.\n%!";
-              mul_seq p Z.(a + z_two)
+              mul_seq p Z.(a + (of_int 2))
           | _ ->
               Printf.printf "** mul seq: prime with %s\n%!" Z.(to_string a);
               Some p'
     in
-    let pmm = prime ?g ~bits in
-    match mul_seq pmm z_two with
+    let pmm = Nocrypto.Rng.prime ?g bits in
+    match mul_seq pmm (Z.of_int 2) with
     | None    -> pm_strong_prime ?g ~bits
     | Some pm ->
-        match mul_seq pm z_two with
+        match mul_seq pm (Z.of_int 2) with
         | None   -> pm_strong_prime ?g ~bits
         | Some p -> (pmm, pm, p)
 
-  let slim = Z.(pow z_two 8)
+  let slim = Z.(pow (of_int 2) 8)
 
   (* Williams/Schmid strong prime generator. *)
 
   let rec p_strong_prime1 ?g ~bits =
     let (bits1, bits2) = (bits / 2, bits - bits / 2)
     in
-    let pmm = prime ?g ~bits:bits1
-    and pp  = prime ?g ~bits:bits2 in
+    let pmm = Nocrypto.Rng.prime ?g bits1
+    and pp  = Nocrypto.Rng.prime ?g bits2 in
     let r   = Z.(pp - invert pmm pp)
     in
     let rec find_a = function
@@ -119,17 +119,17 @@ module RSA_misc = struct
           Printf.printf "off the cliff...\n%!" ;
           p_strong_prime1 ?g ~bits
       | a ->
-          let pm = Z.(z_two * a * pmm * pp + z_two * r * pmm + one) in
+          let pm = Z.((of_int 2) * a * pmm * pp + (of_int 2) * r * pmm + one) in
           match Z.probab_prime pm 25 with
           | 0 -> find_a Z.(a + one)
           | _ ->
-              let p = Z.(z_two * pm + one) in
+              let p = Z.((of_int 2) * pm + one) in
               match Z.probab_prime p 25 with
               | 0 -> find_a Z.(a + one)
               | _ ->
                   Printf.printf "found pm, p with %s\n%!" Z.(to_string a);
                   (pmm, pm, pp, p)
     in
-    find_a z_two
+    find_a Z.(of_int 2)
 
 end
