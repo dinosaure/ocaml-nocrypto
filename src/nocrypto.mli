@@ -283,7 +283,7 @@ module Hash : sig
 
   (** {1 Codes-based interface} *)
 
-  type hash = [ `MD5 | `SHA1 | `SHA224 | `SHA256 | `SHA384 | `SHA512 ]
+  type hash = [ `MD5 | `SHA1 | `SHA224 | `SHA256 | `SHA384 | `SHA512 ] [@@deriving sexp]
   (** Algorithm codes. *)
 
   val module_of   : [< hash ] -> (module S)
@@ -852,7 +852,7 @@ module Rsa : sig
     dp : Z.t ; (** [d mod (p-1)] *)
     dq : Z.t ; (** [d mod (q-1)] *)
     q' : Z.t ; (** [q^(-1) mod p] *)
-  }
+  } [@@deriving sexp]
   (** Full private key (two-factor version).
 
       {b Note} The key layout assumes that [p > q], which affects the quantity
@@ -1177,10 +1177,10 @@ module Dh : sig
     p  : Z.t ;        (** modulus *)
     gg : Z.t ;        (** generator *)
     q  : Z.t option ; (** subgroup order; potentially unknown *)
-  }
+  } [@@deriving sexp]
   (** A DH group. *)
 
-  type secret = private { x : Z.t }
+  type secret = private { x : Z.t } [@@deriving sexp]
   (** A private secret. *)
 
   val modulus_size : group -> bits

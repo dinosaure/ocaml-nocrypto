@@ -9,10 +9,10 @@ exception Invalid_public_key
 type group = {
   p  : Z.t        ;  (* The prime modulus *)
   gg : Z.t        ;  (* Group generator *)
-  q  : Z.t option ;  (* `gg`'s order, maybe *)
-}
+  q  : Z.t option [@sexp.option];  (* `gg`'s order, maybe *)
+} [@@deriving sexp]
 
-type secret = { x : Z.t }
+type secret = { x : Z.t [@sexp.opaque] } [@@deriving sexp]
 
 (*
  * Estimates of equivalent-strength exponent sizes for the moduli sizes.
