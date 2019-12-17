@@ -23,7 +23,19 @@
 #define be64toh(x) OSSwapBigToHostInt64(x)
 #define le64toh(x) OSSwapLittleToHostInt64(x)
 
-#else
+#elif defined(_FREESTANDING_SOURCE)
+
+#include <endian.h>
+
+# if __BYTE_ORDER == __LITTLE_ENDIAN
+#  define be64toh(x) _bswap64 (x)
+#  define htobe64(x) _bswap64 (x)
+# else
+#  define htobe64(x) (x)
+#  define be64toh(x) (x)
+# endif
+
+#elif defined(_DEFAULT_SOURCE)
 
 /* Needs _DEFAULT_SOURCE with glibc */
 #include <endian.h>
