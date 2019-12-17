@@ -1,8 +1,8 @@
-#if !defined (H__NOCRYPTO)
+#ifndef H__NOCRYPTO
 #define H__NOCRYPTO
 
 #include <stdint.h>
-#include "endian.h"
+#include "no_endian.h"
 
 #include <caml/mlvalues.h>
 #include <caml/bigarray.h>

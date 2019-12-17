@@ -1,6 +1,5 @@
 #include "nocrypto.h"
 
-
 static inline void xor_into (uint8_t *src, uint8_t *dst, size_t n) {
 
 #if defined (__nc_SSE__)
