@@ -1,0 +1,8 @@
+(library
+  (name no_native)
+  (public_name nocrypto.native)
+  (modules no_native)
+  (libraries cstruct ocplib-endian)
+  (wrapped false)
+  (virtual_modules no_native)
+  (default_implementation nocrypto.native.unix))
