@@ -1,9 +1,16 @@
 (library
   (public_name nocrypto)
   (synopsis "Simple crypto for the modern age")
-  (libraries cstruct zarith ocplib-endian nocrypto.native)
+  (libraries cstruct ocplib-endian nocrypto.native)
+  (modules_without_implementation z)
   (wrapped false)
   (preprocess (pps ppx_sexp_conv))
-  (private_modules no_base64 no_ccm no_cipher_block no_cipher_stream no_dh
+  (flags (:standard -no-keep-locs))
+  (private_modules z
+                   no_base64 no_ccm no_cipher_block no_cipher_stream no_dh
                    no_dsa no_fortuna no_hash no_hmac_drgb no_numeric
                    no_rng no_rsa no_uncommon))
+
+(rule
+ (target z.mli)
+ (action (copy %{lib:zarith:z.mli} z.mli)))
