@@ -1,0 +1,43 @@
+(library
+  (name nocrypto_native_xen)
+  (public_name nocrypto.native.xen)
+  (modules no_native)
+  (implements no_native)
+  (variant xen)
+  (optional)
+  (libraries bigarray-compat mirage-xen zarith.xen)
+  (foreign_stubs
+    (language c)
+    (names misc
+           md5 sha1 sha256 sha512 stubs
+           aes_generic aes_aesni ghash_generic ghash_pclmul
+           des_generic)
+    (flags --std=c99 -Wall -Wextra -O3 -D_FREESTANDING_SOURCE
+             -lzarith-xen
+	     -lgmp-xen
+             (:include xen_c_flags.sexp)
+             (:include c_flags.sexp))))
+
+(rule (with-stdout-to c_flags.sexp (run ../config/cfg.exe)))
+(rule (copy %{lib:mirage-xen-ocaml:cflags.sexp} xen_c_flags.sexp))
+
+(rule (copy ../native/hash/bitfn.h bitfn.h))
+(rule (copy ../native/nocrypto.h nocrypto.h))
+(rule (copy ../native/no_endian.h no_endian.h))
+(rule (copy ../native/hash/md5.h md5.h))
+(rule (copy ../native/hash/sha1.h sha1.h))
+(rule (copy ../native/hash/sha256.h sha256.h))
+(rule (copy ../native/hash/sha512.h sha512.h))
+(rule (copy ../native/des/des_generic.h des_generic.h))
+
+(rule (copy ../native/misc.c misc.c))
+(rule (copy ../native/hash/md5.c md5.c))
+(rule (copy ../native/hash/sha1.c sha1.c))
+(rule (copy ../native/hash/sha256.c sha256.c))
+(rule (copy ../native/hash/sha512.c sha512.c))
+(rule (copy ../native/hash/stubs.c stubs.c))
+(rule (copy ../native/aes/aes_generic.c aes_generic.c))
+(rule (copy ../native/aes/aes_aesni.c aes_aesni.c))
+(rule (copy ../native/ghash/ghash_generic.c ghash_generic.c))
+(rule (copy ../native/ghash/ghash_pclmul.c ghash_pclmul.c))
+(rule (copy ../native/des/des_generic.c des_generic.c))
